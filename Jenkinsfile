@@ -16,11 +16,14 @@ pipeline{
                 message "Enter which environment to deploy"
                 ok "environment selected"
                 parameters{
-                    choice (name:'ENV',choices:['PROD','DEV','UAT'],description:'Thanks')
+                    choice (name:'ENV1',choices:['PROD','DEV','UAT'],description:'Hello')
+                    choice (name:'ENV2',choices:['PROD','DEV','UAT'],description:'World')
+
                 }
             }
             steps{
-                echo "Deploying the application to ${ENV}"
+                echo "Deploying the application to ${ENV1}"
+                echo "Deploying the application to ${ENV2}"
             }
         }
     }
