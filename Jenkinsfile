@@ -12,8 +12,8 @@ pipeline{
             }
         }    
         stage("Deploy"){
-            input{
-                messages "Enter which environment to deploy"
+            input {
+                message "Enter which environment to deploy"
                 ok "environment selected"
                 parameters{
                     choice (name:'ENV',choices:['PROD','DEV','UAT'],description:'Thanks')
