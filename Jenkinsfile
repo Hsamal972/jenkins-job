@@ -1,29 +1,33 @@
 pipeline{
     agent any
+    tools {
+        maven 'Maven'
+    }
     stages{
-        stage("Build"){
+        stage("Build jar") {
             steps{
-                echo "Building the application"
-            }
-        }
-        stage("Test"){
-            steps{
-                echo "Testing the application"
-            }
-        }    
-        stage("Deploy"){
-            input {
-                message "Enter which environment to deploy"
-                ok "environment selected"
-                parameters{
-                    choice (name:'ENV1',choices:['PROD','DEV','UAT'],description:'Hello')
-                    choice (name:'ENV2',choices:['PROD','DEV','UAT'],description:'World')
-
+                script {
+                    echo "Building the application"
+                    sh 'mvn package'
                 }
             }
+        }
+        stage("Build image") {
             steps{
-                echo "Deploying the application to ${ENV1}"
-                echo "Deploying the application to ${ENV2}"
+                script {
+                    echo "Building the application"
+                    withCredentials([usernamePassword(credentialsId:'hub-docker-repo',usernameVariable:'USER',passwordVariable:'PASS')])
+                    sh 'docker build doomedmonk13/test1:jma-2.0 .'
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push doomedmonk13/test1:jma-2.0'
+                }
+            }
+        }
+        stage("Test") {
+            steps{
+                script {
+                    echo "Deploying the application"
+                }
             }
         }
     }
