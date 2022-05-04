@@ -12,8 +12,15 @@ pipeline{
             }
         }    
         stage("Deploy"){
+            input{
+                messages "Enter which environment to deploy"
+                ok "environment selected"
+                parameters{
+                    choice (name:'ENV',choices:['PROD','DEV','UAT'],description:'Thanks')
+                }
+            }
             steps{
-                echo "Deploying the application"
+                echo "Deploying the application to ${ENV}"
             }
         }
     }
