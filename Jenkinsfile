@@ -24,7 +24,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage 'doomedmonk13/test1:jma-3.0'
                 }
             }
         }
