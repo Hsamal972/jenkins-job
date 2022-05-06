@@ -35,8 +35,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    echo "Building docker image in ${ENV}"
-                    buildImage 'doomedmonk13/test1:jma-3.0'
+                    gv.dockerImage()
                 }
             }
         }
