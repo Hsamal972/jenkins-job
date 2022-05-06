@@ -9,9 +9,9 @@ def incrementVersion() {
 def dockerImage() {
     echo "Building the application"
     withCredentials([usernamePassword(credentialsId:'hub-docker-repo',usernameVariable:'USER',passwordVariable:'PASS')]) {
-        sh "docker build -t $IMAGE_NAME ."
+        sh "docker build -t doomedmonk13/test1:$IMAGE_NAME ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker push $IMAGE_NAME"
+        sh "docker push doomedmonk13/test1:$IMAGE_NAME"
     }
 }
 
