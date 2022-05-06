@@ -3,6 +3,9 @@
 def gv
 pipeline {
     agent any
+    environment {
+        ENV = "DEV"
+    }
     tools {
         maven 'maven-3.6'
     }
@@ -17,6 +20,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
+                    echo "Building jar in ${ENV}"
                     buildJar()
                 }
             }
@@ -24,6 +28,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
+                    echo "Building docker image in ${ENV}"
                     buildImage 'doomedmonk13/test1:jma-3.0'
                 }
             }
