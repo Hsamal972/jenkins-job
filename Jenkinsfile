@@ -17,7 +17,7 @@ pipeline {
                 }
             }
         }
-        stage{
+        stage("setting up auto versioning"){
             steps {
                 script {
                     gv.incrementVersion()
