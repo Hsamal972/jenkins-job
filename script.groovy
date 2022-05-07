@@ -15,7 +15,7 @@ def commitVersionToGit() {
         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/Hsamal972/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "push from jenkins"'
-        sh 'git push origin HEAD:jenkins-job'
+        sh 'git push origin HEAD:jenkins-jobs'
     }
 }
 
