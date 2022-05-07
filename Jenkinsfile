@@ -46,5 +46,12 @@ pipeline {
                 }
             }
         }
+        stage("pushing version to SCM") {
+            steps {
+                script {
+                    gv.commitVersionToGit()
+                }
+            }
+        }
     }   
 }

@@ -6,6 +6,19 @@ def incrementVersion() {
     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
 }
 
+def commitVersionToGit() {
+    echo 'commiting version to SCM'
+    withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh 'git config --global user.name "jenkins"'
+        sh 'git config --global user.email "jenkins@jenkins.com"'
+        sh 'git config --list'
+        sh "git remote set-url origin https://$USER:$PASS@gitlab.com/Hsamal972/jenkins-job.git"
+        sh 'git add .'
+        sh 'git commit -m "push from jenkins"'
+        sh 'git push origin HEAD:jenkins-job'
+    }
+}
+
 def dockerImage() {
     echo "Building the application"
     withCredentials([usernamePassword(credentialsId:'hub-docker-repo',usernameVariable:'USER',passwordVariable:'PASS')]) {
