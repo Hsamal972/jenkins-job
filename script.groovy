@@ -9,10 +9,11 @@ def incrementVersion() {
 def commitVersionToGit() {
     echo 'commiting version to SCM'
     withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh 'git init'
         sh 'git config --global user.name "jenkins"'
         sh 'git config --global user.email "jenkins@jenkins.com"'
         sh 'git config --list'
-        sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/Hsamal972/java-maven-app.git/"
+        sh "git remote add origin https://${USER}:${PASS}@gitlab.com/Hsamal972/java-maven-app.git/"
         sh 'git add .'
         sh 'git commit -m "push from jenkins"'
         sh 'git push origin HEAD:jenkins-jobs'
