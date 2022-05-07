@@ -24,11 +24,19 @@ pipeline {
                 }
             }
         }
+        
         stage("build jar") {
             steps {
                 script {
                     echo "Building jar in ${ENV}"
                     buildJar()
+                }
+            }
+        }
+        stage("pushing version to SCM") {
+            steps {
+                script {
+                    gv.commitVersionToGit()
                 }
             }
         }
@@ -43,13 +51,6 @@ pipeline {
             steps {
                 script {
                     gv.deployApp()
-                }
-            }
-        }
-        stage("pushing version to SCM") {
-            steps {
-                script {
-                    gv.commitVersionToGit()
                 }
             }
         }
