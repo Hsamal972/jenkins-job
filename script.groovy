@@ -11,7 +11,7 @@ def commitVersionToGit() {
     withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh 'git config --global user.name "jenkins"'
         sh 'git config --global user.email "jenkins@jenkins.com"'
-        sh 'git config --global --unset http.proxy' 
+       // sh 'git config --global --unset http.proxy' 
         sh 'git config --global --unset https.proxy'
         sh 'git config --list'
         sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/Hsamal972/java-maven-app.git/"
