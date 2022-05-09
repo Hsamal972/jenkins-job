@@ -17,26 +17,11 @@ pipeline {
                 }
             }
         }
-        stage("setting up auto versioning") {
-            steps {
-                script {
-                    gv.incrementVersion()
-                }
-            }
-        }
-        
         stage("build jar") {
             steps {
                 script {
                     echo "Building jar in ${ENV}"
                     buildJar()
-                }
-            }
-        }
-        stage("pushing version to SCM") {
-            steps {
-                script {
-                    gv.commitVersionToGit()
                 }
             }
         }
