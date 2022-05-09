@@ -8,7 +8,7 @@ def incrementVersion() {
 
 def commitVersionToGit() {
     echo 'commiting version to SCM'
-    withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+    withCredentials([usernamePassword(credentialsId: 'github-username-password', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh 'git add .'
         sh 'git commit -m "push from jenkins"'
         sh 'git push origin HEAD:jenkins-jobs'
@@ -17,7 +17,7 @@ def commitVersionToGit() {
 
 def dockerImage() {
     echo "Building the application"
-    withCredentials([usernamePassword(credentialsId:'hub-docker-repo',usernameVariable:'USER',passwordVariable:'PASS')]) {
+    withCredentials([usernamePassword(credentialsId:'dockerhub-username-password',usernameVariable:'USER',passwordVariable:'PASS')]) {
         sh "docker build -t doomedmonk13/test1:$IMAGE_NAME ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
         sh "docker push doomedmonk13/test1:$IMAGE_NAME"
