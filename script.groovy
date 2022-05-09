@@ -11,7 +11,8 @@ def dockerImage() {
     echo "Building the application"
     withCredentials([usernamePassword(credentialsId: 'dockerhub-username-password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
         sh "docker build -t doomedmonk13/test1:jma-${BUILD_NUMBER} ."
-        sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+//         sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+        sh "docker login -u $USERNAME -p $PASSWORD"
         sh "docker push doomedmonk13/test1:jma-${BUILD_NUMBER}"
     }
 }
