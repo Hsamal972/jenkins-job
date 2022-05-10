@@ -32,7 +32,7 @@ pipeline {
                 script {
                     echo "Deploying the application..."
                     sshagent(['ec2-instance-ssh-key']) {
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@15.206.90.10'
+                        sh 'ssh -t -t -R -o StrictHostKeyChecking=no ec2-user@15.206.90.10'
                         sh 'sudo yum install docker -y && sudo yum update docker -y'
                         sh 'service docker start'
                         withCredentials([usernamePassword(credentialsId:'dockerhub-username-password',usernameVariable:'USER',passwordVariable:'PASS')]) {
