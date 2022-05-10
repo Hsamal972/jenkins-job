@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
-                    def dockercmd = 'docker run -d -p 8080:8080 doomedmonk13/test1'
+                    def dockercmd = 'sudo docker run -d -p 8080:8080 doomedmonk13/test1'
                     sshagent(['ec2-instance-ssh-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2@15.206.90.10 ${dockercmd}"
                     }
