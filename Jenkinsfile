@@ -1,6 +1,3 @@
-#!/usr/bin/env groovy
-@Library('jenkins-shared-library')
-def gv
 pipeline {
     agent any
     environment {
@@ -10,32 +7,30 @@ pipeline {
         maven 'maven-3.6'
     }
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
         stage("build jar") {
             steps {
                 script {
                     echo "Building jar in ${ENV}"
-                    buildJar()
+                    sh 'mvn clean package -Dmaven.test.skip=true'
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    gv.dockerImage()
-                }
+                    echo "Building the application..."
+                    withCredentials([usernamePassword(credentialsId:'dockerhub-username-password',usernameVariable:'USER',passwordVariable:'PASS')]) {
+                        sh "docker build -t doomedmonk13/test1:${BUILD_NUMBER} ."
+                        sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
+                        sh "docker push doomedmonk13/test1:${BUILD_NUMBER}"
+                    }
+                }    
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    gv.deployApp()
+                    echo "Deploying the application..."
                 }
             }
         }
