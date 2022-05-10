@@ -31,13 +31,9 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
+                    def dockercmd = 'docker run -d -p 8080:8080 doomedmonk13/test1'
                     sshagent(['ec2-instance-ssh-key']) {
-                        sh 'ssh -t -t -R -o StrictHostKeyChecking=no ec2-user@15.206.90.10'
-                        sh 'sudo yum install docker -y && sudo yum update docker -y'
-                        sh 'service docker start'
-                        withCredentials([usernamePassword(credentialsId:'dockerhub-username-password',usernameVariable:'USER',passwordVariable:'PASS')]) {
-                            sh 'sudo docker run -d -p 8080:8080 doomedmonk13/test1'
-                        }
+                        sh "ssh -o StrictHostKeyChecking=no ec2@15.206.90.10 ${dockercmd}"
                     }
                 }
             }
