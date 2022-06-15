@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                echo 'Deploy to LKE kubernetes cluster'
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'LKE-CICD-kubeconfig', namespace: '', serverUrl: 'https://50497f08-f9e9-478d-9864-4cbdc56e1aee.ap-west-2.linodelke.net:443') {
+                    sh '''
+                        envsubst < deployment.yaml | kubectl apply -f -
+                    '''
+                }
+            }
+        }
+    }
+}
