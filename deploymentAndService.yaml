@@ -20,8 +20,10 @@ spec:
         image: $DOCKER_REPO:$IMAGE_TAG
         ports:
         - containerPort: 8080
+      imagePullPolicy: Always
       imagePullSecrets:
         - name: ecrcred
+
 
 ---
 apiVersion: v1
