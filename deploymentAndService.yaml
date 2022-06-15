@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
       - name: $APP_NAME
-        image: doomedmonk13/test1:$IMAGE_TAG
+        image: $DOCKER_REPO:$IMAGE_TAG
         ports:
         - containerPort: 8080
       imagePullSecrets:
-        - name: dockerhubcred
+        - name: ecrcred
 
 ---
 apiVersion: v1
